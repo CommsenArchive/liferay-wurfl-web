@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	default-destroy-method="destroy" default-init-method="afterPropertiesSet"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="com.commsen.liferay.wurfl.LiferayWURFLHolder" class="com.commsen.liferay.wurfl.LiferayWURFLHolder" />
+
+	<bean id="com.commsen.liferay.wurfl.WurflDeviceRecognitionProvider"
+		class="com.commsen.liferay.wurfl.WurflDeviceRecognitionProvider">
+		<property name="wurflHolder" ref="com.commsen.liferay.wurfl.LiferayWURFLHolder" />
+		<property name="knownDevices" ref="com.commsen.liferay.wurfl.WurflKnownDevices" />
+	</bean>
+
+	<bean id="com.commsen.liferay.wurfl.WurflKnownDevices" class="com.commsen.liferay.wurfl.WurflKnownDevices">
+		<property name="wurflHolder" ref="com.commsen.liferay.wurfl.LiferayWURFLHolder" />
+	</bean>
+
+
+	<!-- Messaging -->
+
+
+	<bean id="messageListener.device_recognition" class="com.commsen.liferay.multidevice.DeviceRecognitionMessageListener">
+		<property name="deviceRecognitionProvider" ref="com.commsen.liferay.wurfl.WurflDeviceRecognitionProvider" />
+	</bean>
+
+	<bean id="messagingConfigurator" class="com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator">
+		<property name="messageListeners">
+			<map key-type="java.lang.String" value-type="java.util.List">
+				<entry key="commsen/device_recognition_provider">
+					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
+						<ref bean="messageListener.device_recognition" />
+					</list>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+</beans>
