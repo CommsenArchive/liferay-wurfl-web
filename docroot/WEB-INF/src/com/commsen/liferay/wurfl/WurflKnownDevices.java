@@ -31,6 +31,7 @@ import com.commsen.liferay.multidevice.VersionableName;
 import com.commsen.liferay.multidevice.VersionableNameImpl;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 /**
  * 
@@ -39,6 +40,8 @@ import org.apache.commons.lang.StringUtils;
  */
 public class WurflKnownDevices implements KnownDevices {
 
+	private static final Logger log = Logger.getLogger(WurflKnownDevices.class);
+	
 	private WURFLHolder wurflHolder;
 	private Set<VersionableName> operatingSystems;
 	private Set<VersionableName> browsers;
@@ -77,7 +80,7 @@ public class WurflKnownDevices implements KnownDevices {
 		browsers = new TreeSet<VersionableName>(tmpBrowsers.values());
 		brands = new TreeSet<VersionableName>(tmpBrands.values());
 
-		System.out.println("INIT complete in " + (System.currentTimeMillis() - t) + " milliseconds!!!");
+		log.debug("INIT complete in " + (System.currentTimeMillis() - t) + " milliseconds!!!");
 		loaded = true;
 	}
 
