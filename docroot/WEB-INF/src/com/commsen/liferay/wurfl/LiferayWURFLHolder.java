@@ -40,8 +40,8 @@ public class LiferayWURFLHolder implements WURFLHolder {
 
 
 	public void init() {
-		String mainFile = PropsUtil.get(WURFL_MAIN);
-		String[] patchFiles = PropsUtil.getArray(WURFL_PATCHES);
+		final String mainFile = PropsUtil.get(WURFL_MAIN);
+		final String[] patchFiles = PropsUtil.getArray(WURFL_PATCHES);
 
 		if (StringUtils.isBlank(mainFile)) {
 			_log.warn("Wurfl NOT initialised! Plase set '" + WURFL_MAIN + "' property!");
