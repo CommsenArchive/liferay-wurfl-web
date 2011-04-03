@@ -41,14 +41,21 @@ public class LiferayWURFLHolder implements WURFLHolder {
 
 
 	public void init() {
-		final String mainFile = PropsUtil.get(WURFL_MAIN);
-		final String[] patchFiles = PropsUtil.getArray(WURFL_PATCHES);
-
+		String mainFile = PropsUtil.get(WURFL_MAIN);
 		if (StringUtils.isBlank(mainFile)) {
-			_log.warn("Wurfl NOT initialised! Plase set '" + WURFL_MAIN + "' property!");
-			return;
+			mainFile = PropsUtil.get(WURFL_MAIN_DEFAULT);
+			if (StringUtils.isBlank(mainFile)) {
+				_log.warn("Wurfl NOT initialised! Plase set '" + WURFL_MAIN + "' property!");
+				return;
+			}
 		}
 
+		String[] patchFiles = PropsUtil.getArray(WURFL_PATCHES);
+		if (patchFiles == null || patchFiles.length == 0) {
+			patchFiles = PropsUtil.getArray(WURFL_PATCHES_DEFAULT);
+		}
+		
+		
 		wurflHolder = new CustomWURFLHolder(mainFile, patchFiles);
 		_log.debug("Wurfl initialised!");
 	}
@@ -57,6 +64,8 @@ public class LiferayWURFLHolder implements WURFLHolder {
 
 	private static final String WURFL_MAIN = "wurfl.main";
 	private static final String WURFL_PATCHES = "wurfl.patches";
+	private static final String WURFL_MAIN_DEFAULT = "wurfl.main.default";
+	private static final String WURFL_PATCHES_DEFAULT = "wurfl.patches.default";
 
 
 	@Override

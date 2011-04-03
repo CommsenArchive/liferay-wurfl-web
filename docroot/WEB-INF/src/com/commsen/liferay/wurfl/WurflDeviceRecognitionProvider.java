@@ -42,7 +42,7 @@ public class WurflDeviceRecognitionProvider implements DeviceRecognitionProvider
 
 	@Override
 	public Device getDeviceFromRequest(HttpServletRequest request) {
-		com.commsen.liferay.multidevice.Device device = null;
+		Device device = null;
 		net.sourceforge.wurfl.core.Device wurflDevice = wurflHolder.getWURFLManager().getDeviceForRequest(request);
 		if (wurflDevice != null) {
 			@SuppressWarnings("unchecked")
